@@ -8,63 +8,65 @@ type Props = {
 
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
-    <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal title="Como jogar" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Guess the word in 6 tries. After each guess, the color of the tiles will
-        change to show how close your guess was to the word.
+        <strong>É simples mas tem que ler! </strong>
+        Adivinhe a palavra secreta em 6 tentativas. Após cada tentativa, as
+        cores da palavra vão mostrar o quanto você acertou da palavra secreta.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
         <Cell
           isRevealing={true}
           isCompleted={true}
-          value="W"
+          value="C"
           status="correct"
         />
         <Cell value="E" />
-        <Cell value="A" />
         <Cell value="R" />
-        <Cell value="Y" />
+        <Cell value="T" />
+        <Cell value="A" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter W is in the word and in the correct spot.
+        A letra C está na posição correta. Ou seja a palavra secreta também tem
+        a letra C neste mesmo lugar.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
-        <Cell value="P" />
-        <Cell value="I" />
+        <Cell value="Q" />
+        <Cell value="U" />
         <Cell
           isRevealing={true}
           isCompleted={true}
-          value="L"
+          value="A"
           status="present"
         />
-        <Cell value="O" />
-        <Cell value="T" />
-      </div>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter L is in the word but in the wrong spot.
-      </p>
-
-      <div className="flex justify-center mb-1 mt-4">
-        <Cell value="V" />
-        <Cell value="A" />
-        <Cell value="G" />
-        <Cell isRevealing={true} isCompleted={true} value="U" status="absent" />
+        <Cell value="S" />
         <Cell value="E" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter U is not in the word in any spot.
+        Neste caso a palavra secreta tem a letra A, mas não nesta posição. Tente
+        outra palavra que tenha a letra A mas em outro lugar.
+      </p>
+
+      <div className="flex justify-center mb-1 mt-4">
+        <Cell value="O" />
+        <Cell value="U" />
+        <Cell value="T" />
+        <Cell isRevealing={true} isCompleted={true} value="R" status="absent" />
+        <Cell value="A" />
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        Pode esquescer a letra R, pois ela não está na palavra secreta.
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
-        This is an open source version of the word guessing game we all know and
-        love -{' '}
+        Esta é uma versão open source do jogo WORDLE em português -
         <a
-          href="https://github.com/cwackerfuss/react-wordle"
+          href="https://github.com/duarch/persiga"
           className="underline font-bold"
         >
-          check out the code here
+          Codigo disponível no GitHub.
         </a>{' '}
       </p>
     </BaseModal>
