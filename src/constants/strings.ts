@@ -1,32 +1,32 @@
 export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
-export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
-export const GAME_COPIED_MESSAGE = 'Game copied to clipboard'
-export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
-export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
+export const WIN_MESSAGES = ['Inacreditável!', 'Incrível!', 'Vc está demais!']
+export const GAME_COPIED_MESSAGE = 'Copiado!'
+export const NOT_ENOUGH_LETTERS_MESSAGE = 'Não há letras suficientes'
+export const WORD_NOT_FOUND_MESSAGE = 'Palavra não encontrada'
 export const HARD_MODE_ALERT_MESSAGE =
-  'Hard Mode can only be enabled at the start!'
+  'O modo difícil só pode ser ativado antes de começar o jogo'
 export const HARD_MODE_DESCRIPTION =
-  'Any revealed hints must be used in subsequent guesses'
-export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
+  'Letras descorbertas deverão obrigatoriamente ser usadas na próxima tentativa'
+export const HIGH_CONTRAST_MODE_DESCRIPTION = 'Modo de alto contraste'
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
-  `The word was ${solution}`
+  `A palavra era ${solution}`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
-  `Must use ${guess} in position ${position}`
+  `Precisa usar ${guess} na posição ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
-  `Guess must contain ${letter}`
+  `Sua tentativa deve incluir ${letter}`
 export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Delete'
-export const STATISTICS_TITLE = 'Statistics'
-export const GUESS_DISTRIBUTION_TEXT = 'Guess Distribution'
-export const NEW_WORD_TEXT = 'New word in'
-export const SHARE_TEXT = 'Share'
-export const MIGRATE_BUTTON_TEXT = 'Transfer'
+export const STATISTICS_TITLE = 'Estatísticas'
+export const GUESS_DISTRIBUTION_TEXT = 'Distribuição de tentativas'
+export const NEW_WORD_TEXT = 'Nova palavra em'
+export const SHARE_TEXT = 'Compartilhar'
+export const MIGRATE_BUTTON_TEXT = 'Transferir'
 export const MIGRATE_DESCRIPTION_TEXT =
-  'Click here to transfer your statistics to a new device.'
-export const TOTAL_TRIES_TEXT = 'Total tries'
-export const SUCCESS_RATE_TEXT = 'Success rate'
-export const CURRENT_STREAK_TEXT = 'Current streak'
-export const BEST_STREAK_TEXT = 'Best streak'
+  'Clique para transferir suas palavras para outro dispositivo'
+export const TOTAL_TRIES_TEXT = 'Total de tentativas'
+export const SUCCESS_RATE_TEXT = 'Taxa de acertos'
+export const CURRENT_STREAK_TEXT = 'Sequência atual'
+export const BEST_STREAK_TEXT = 'Melhor sequência'
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
-  "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser."
+  'Você está usando um navegador interno do app isso pode causar problemas ao compartilhar ou salvar seus resultados. Incentivamos a usar o navegador padrão do seu dispositivo.'

@@ -1,4 +1,4 @@
-# React Wordle
+# PERSIGA
 
 This is a clone project of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
 
@@ -66,6 +66,7 @@ Note that guesses are validated against both the length of the solution, and pre
 - Update the name and short name in [public/manifest.json](public/manifest.json)
 - Update the strings in [src/constants/strings.ts](src/constants/strings.ts)
 - Add all of the five letter words in the language to [src/constants/validGuesses.ts](src/constants/validGuesses.ts), replacing the English words
+  # HERE
 - Add a list of goal words in the language to [src/constants/wordlist.ts](src/constants/wordlist.ts), replacing the English words
 - Update the "Settings" modal in [src/components/modals/SettingsModal.tsx](src/components/modals/SettingsModal.tsx)
 - Update the "Info" modal in [src/components/modals/InfoModal.tsx](src/components/modals/InfoModal.tsx)
@@ -181,7 +182,7 @@ To enable Plausible Analytics:
 - [Wordle.cl](https://www.wordle.cl): Chilean modisms, cities, places
 - [Wrdl](https://wrdl-abae.vercel.app/): Words that are 5 letters long after getting rid of their vowels
 - [WROUD](https://www.wroud.net/): W R O U D is a simple word game that challenges people to find a six-letter word in 3 guesses from a cloud of letters. https://www.wroud.net/ A spinoff of Wordle but quite different and may be more fun!. WROUD = Word + Cloud
-- [香港麻雀 糊dle](https://hkwudle.vercel.app/): Mahjong hands under Hong Kong rules
+- [香港麻雀 糊 dle](https://hkwudle.vercel.app/): Mahjong hands under Hong Kong rules
 
 ### Math, Acronyms, Science, Tech, and more
 
