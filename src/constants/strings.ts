@@ -1,6 +1,11 @@
 export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
-export const WIN_MESSAGES = ['Inacreditável!', 'Incrível!', 'Vc está demais!']
+export const WIN_MESSAGES = [
+  'Inacreditável!',
+  'Incrível!',
+  'Vc está demais!',
+  'Fantástico!',
+]
 export const GAME_COPIED_MESSAGE = 'Copiado!'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Não há letras suficientes'
 export const WORD_NOT_FOUND_MESSAGE = 'Palavra não encontrada'
@@ -15,8 +20,8 @@ export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Precisa usar ${guess} na posição ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
   `Sua tentativa deve incluir ${letter}`
-export const ENTER_TEXT = 'Enter'
-export const DELETE_TEXT = 'Delete'
+export const ENTER_TEXT = 'Tentar'
+export const DELETE_TEXT = 'Apagar'
 export const STATISTICS_TITLE = 'Estatísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribuição de tentativas'
 export const NEW_WORD_TEXT = 'Nova palavra em'

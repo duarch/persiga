@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 export const EmigratePanel = () => {
   const [isCopyButtonEnabled, setIsCopyButtonEnabled] = useState(true)
-  const [copyButtonText, setCopyButtonText] = useState('Copy')
+  const [copyButtonText, setCopyButtonText] = useState('Copiar')
   const stats = loadStats()
   const gameState = loadGameStateFromLocalStorage()
 
@@ -21,7 +21,7 @@ export const EmigratePanel = () => {
 
   const copyEmigrationCodeToClipboard = () => {
     copyTextToClipboard(emigrationCode)
-    setCopyButtonText('Copied!')
+    setCopyButtonText('Copiado!')
     setIsCopyButtonEnabled(false)
   }
 
@@ -31,7 +31,7 @@ export const EmigratePanel = () => {
         htmlFor="message"
         className="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
       >
-        Copy your migration code:
+        Copie seu código de migração:
       </label>
       <textarea
         id="emigration-code"
