@@ -11,9 +11,10 @@ type Props = {
 export const CompletedRow = ({ solution, guess, isRevealing }: Props) => {
   const statuses = getGuessStatuses(solution, guess)
   const splitGuess = unicodeSplit(guess)
+  const gridTemplateColumns = `repeat(${solution.length}, 1fr)`
 
   return (
-    <div className="flex justify-center mb-1">
+    <div className="grid gap-1" style={{ gridTemplateColumns }}>
       {splitGuess.map((letter, i) => (
         <Cell
           key={i}
