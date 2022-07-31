@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
@@ -10,7 +11,6 @@
   --absent-cell-bg-color: theme('colors.slate.400');
   --correct-cell-bg-color: theme('colors.green.400');
   --present-cell-bg-color: theme('colors.yellow.400');
-  --navbar-height: 3rem;
 }
 
 .dark {
@@ -66,20 +66,15 @@ svg.cursor-pointer:hover {
   animation-duration: var(--animation-speed-fast);
 }
 
-.navbar-content {
-  display: flex;
-  height: var(--navbar-height);
-  align-items: center;
-  justify-content: space-between;
+.navbar {
+  margin-bottom: 2%;
 }
 
-#game-container {
-  --navbar-margin: 2vw;
-  --full-navbar-height: calc(var(--navbar-height) + var(--navbar-margin));
-  /* This margin separates the game grid from the top of the screen,
-     so it must include the navbar height along with any padding */
-  margin-top: var(--full-navbar-height);
-  height: calc(100% - var(--full-navbar-height));
+.navbar-content {
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .right-icons {
@@ -150,7 +145,6 @@ svg.cursor-pointer:hover {
 }
 
 /* Additional animation on the child div to avoid letters turning upside down/snapping back to upright visual glitch */
-
 @keyframes offsetLetterFlip {
   0% {
     transform: rotateX(0deg);
@@ -164,9 +158,11 @@ svg.cursor-pointer:hover {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
