@@ -15,7 +15,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         cores da palavra vão mostrar o quanto você acertou da palavra secreta.
       </p>
 
-      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
+      <div className="flex justify-center mb-1 mt-4">
         <Cell
           isRevealing={true}
           isCompleted={true}
@@ -32,7 +32,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         a letra C neste mesmo lugar.
       </p>
 
-      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
+      <div className="flex justify-center mb-1 mt-4">
         <Cell value="Q" />
         <Cell value="U" />
         <Cell
@@ -49,7 +49,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         outra palavra que tenha a letra A mas em outro lugar.
       </p>
 
-      <div className="grid grid-cols-5 gap-1 mb-1 mt-4">
+      <div className="flex justify-center mb-1 mt-4">
         <Cell value="O" />
         <Cell value="U" />
         <Cell value="T" />

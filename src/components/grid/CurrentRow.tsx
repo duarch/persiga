@@ -9,10 +9,10 @@ type Props = {
 export const CurrentRow = ({ guess, className }: Props) => {
   const splitGuess = unicodeSplit(guess)
   const emptyCells = Array.from(Array(solution.length - splitGuess.length))
-  const classes = `grid gap-1 ${className}`
-  const gridTemplateColumns = `repeat(${solution.length}, 1fr)`
+  const classes = `flex justify-center mb-1 ${className}`
+
   return (
-    <div className={classes} style={{ gridTemplateColumns }}>
+    <div className={classes}>
       {splitGuess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}
