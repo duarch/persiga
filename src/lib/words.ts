@@ -3,6 +3,7 @@ import { VALID_GUESSES } from '../constants/validGuesses'
 import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
+import { ACENTOS } from '../constants/acentos'
 
 // 1 January 2022 Game Epoch
 export const firstGameDate = new Date(2022, 0)
@@ -11,11 +12,18 @@ export const periodInDays = 1
 export const isWordInWordList = (word: string) => {
   return (
     WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
+    VALID_GUESSES.includes(localeAwareLowerCase(word)) ||
+    localeAwareLowerCase(word) in ACENTOS
   )
 }
 
 export const isWinningWord = (word: string) => {
+  console.log(`Tentativa maiuscula ${word}`)
+  console.log(`Tentativa minuscula ${localeAwareLowerCase(word)}`)
+  console.log(`Verdadeiro ou Falso: ${localeAwareLowerCase(word) in ACENTOS}`)
+  // if (localeAwareLowerCase(word) in ACENTOS) {
+  //   console.log(ACENTOS[localeAwareLowerCase(word)])
+  // }
   return solution === word
 }
 
@@ -132,3 +140,5 @@ export const getSolution = (today: Date) => {
 }
 
 export const { solution, solutionIndex, tomorrow } = getSolution(getToday())
+
+console.log(solution)

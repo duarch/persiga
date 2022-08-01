@@ -1,4 +1,4 @@
-export const acentos = {
+export const ACENTOS = {
   abaca: 'abacá',
   abara: 'abará',
   abare: 'abaré',
