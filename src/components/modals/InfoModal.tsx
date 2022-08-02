@@ -61,6 +61,10 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
+        Dedico este app as minhas duas mães
+        <br />
+        &#x1FAF6; Graça e Geysse &#x1FAF6;
+        <br />
         Esta é uma versão open source do jogo WORDLE em português -
         <a
           href="https://github.com/duarch/persiga"

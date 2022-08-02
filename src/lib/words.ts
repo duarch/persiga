@@ -18,13 +18,21 @@ export const isWordInWordList = (word: string) => {
 }
 
 export const isWinningWord = (word: string) => {
-  console.log(`Tentativa maiuscula ${word}`)
-  console.log(`Tentativa minuscula ${localeAwareLowerCase(word)}`)
-  console.log(`Verdadeiro ou Falso: ${localeAwareLowerCase(word) in ACENTOS}`)
-  // if (localeAwareLowerCase(word) in ACENTOS) {
-  //   console.log(ACENTOS[localeAwareLowerCase(word)])
-  // }
+  // console.log(`Tentativa maiuscula ${word}`)
+  // console.log(`Tentativa minuscula ${localeAwareLowerCase(word)}`)
+  // console.log(`Verdadeiro ou Falso: ${localeAwareLowerCase(word) in ACENTOS}`)
+  // console.log(`Afinal: ${localeCorrectWord(word)}`)
+  if (localeAwareLowerCase(word) in ACENTOS) {
+    word = localeCorrectWord(word).toUpperCase()
+  }
   return solution === word
+}
+
+let jAcentos = JSON.parse(JSON.stringify(ACENTOS))
+
+export const localeCorrectWord = (word: string) => {
+  let correctWordWithAcentos = jAcentos[word.toLowerCase()]
+  return correctWordWithAcentos
 }
 
 // build a set of previously revealed letters - present and correct
@@ -67,6 +75,12 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 }
 
 export const unicodeSplit = (word: string) => {
+  // Atenção teste
+  if (localeAwareLowerCase(word) in ACENTOS) {
+    word = localeCorrectWord(word).toUpperCase()
+  } else {
+    return new GraphemeSplitter().splitGraphemes(word)
+  }
   return new GraphemeSplitter().splitGraphemes(word)
 }
 
@@ -141,4 +155,4 @@ export const getSolution = (today: Date) => {
 
 export const { solution, solutionIndex, tomorrow } = getSolution(getToday())
 
-console.log(solution)
+// console.log(solution)
