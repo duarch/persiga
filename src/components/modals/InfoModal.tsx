@@ -22,8 +22,10 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
           value="C"
           status="correct"
         />
-        <Cell value="E" />
+        <Cell value="O" />
         <Cell value="R" />
+        <Cell value="R" />
+        <Cell value="E" />
         <Cell value="T" />
         <Cell value="A" />
       </div>
@@ -33,27 +35,31 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
-        <Cell value="Q" />
-        <Cell value="U" />
+        <Cell value="P" />
+        <Cell value="R" />
+        <Cell value="Ó" />
         <Cell
           isRevealing={true}
           isCompleted={true}
-          value="A"
+          value="X"
           status="present"
         />
-        <Cell value="S" />
-        <Cell value="E" />
+        <Cell value="I" />
+        <Cell value="M" />
+        <Cell value="A" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Neste caso a palavra secreta tem a letra A, mas não nesta posição. Tente
-        outra palavra que tenha a letra A mas em outro lugar.
+        Neste caso a palavra secreta tem a letra X, mas não nesta posição. Tente
+        outra palavra que tenha a letra X mas em outro lugar.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
-        <Cell value="O" />
-        <Cell value="U" />
-        <Cell value="T" />
+        <Cell value="D" />
+        <Cell value="I" />
+        <Cell value="V" />
+        <Cell value="E" />
         <Cell isRevealing={true} isCompleted={true} value="R" status="absent" />
+        <Cell value="S" />
         <Cell value="A" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
