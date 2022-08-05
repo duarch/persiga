@@ -11,19 +11,124 @@ export const getStatuses = (
 
   guesses.forEach((word) => {
     unicodeSplit(word).forEach((letter, i) => {
+      // console.log('Letter: ', letter, 'i: ', i)
+
+      // Treating exceptions for portuguese language
+      // this part updates status of the key color to point
+      // to corresponding letter without the accent
+
+      // Treating letter A
+
+      if (
+        (letter === 'Á' ||
+          letter === 'Ã' ||
+          letter === 'À' ||
+          letter === 'A') &&
+        splitSolution.includes('A' || 'Ã' || 'À' || 'Á')
+      ) {
+        return (charObj[letter] = 'present')
+      }
+
+      // Treating letter E
+
+      if (
+        (letter === 'É' ||
+          letter === 'E' ||
+          letter === 'Ê' ||
+          letter === 'È') &&
+        splitSolution.includes('E' || 'Ê' || 'È' || 'É')
+      ) {
+        return (charObj[letter] = 'present')
+      }
+
+      // Treating letter I
+
+      if (
+        (letter === 'Í' ||
+          letter === 'I' ||
+          letter === 'Î' ||
+          letter === 'Ì') &&
+        splitSolution.includes('I' || 'Î' || 'Ì' || 'Í')
+      ) {
+        return (charObj[letter] = 'present')
+      }
+
+      // Treating letter O
+
+      if (
+        (letter === 'Ó' ||
+          letter === 'Õ' ||
+          letter === 'Ò' ||
+          letter === 'Ô') &&
+        splitSolution.includes('O' || 'Õ' || 'Ò' || 'Ô')
+      ) {
+        console.log('For O Letter: ', letter, 'i: ', i)
+        return (charObj[letter] = 'present')
+      }
+
+      // Treating letter U
+
+      if (
+        (letter === 'Ú' ||
+          letter === 'Ü' ||
+          letter === 'Ù' ||
+          letter === 'Û') &&
+        splitSolution.includes('U' || 'Ü' || 'Ù' || 'Û')
+      ) {
+        return (charObj[letter] = 'present')
+      }
+
+      // Treating letter C
+
+      if (
+        (letter === 'C' || letter === 'Ç') &&
+        splitSolution.includes('Ç' || 'C')
+      ) {
+        return (charObj[letter] = 'present')
+      }
+
       if (!splitSolution.includes(letter)) {
         // make status absent
-        return (charObj[letter] = 'absent')
+
+        return (
+          (charObj[letter] = 'absent'),
+          console.log(
+            'For letter testing absent: ',
+            letter,
+            'Status is',
+            charObj[letter]
+          )
+        )
       }
+
+      // Why no one is reaching this point?
 
       if (letter === splitSolution[i]) {
         //make status correct
-        return (charObj[letter] = 'correct')
+        return (
+          (charObj[letter] = 'correct'),
+          console.log(
+            'For letter testing correct: ',
+            letter,
+            'Status is',
+            charObj[letter]
+          )
+        )
       }
-
       if (charObj[letter] !== 'correct') {
         //make status present
-        return (charObj[letter] = 'present')
+        // if (letter === 'Ç') {
+        //   letter = 'C'
+        // }
+        return (
+          (charObj[letter] = 'present'),
+          console.log(
+            'For letter testing present: ',
+            letter,
+            'Status is',
+            charObj[letter]
+          )
+        )
       }
     })
   })
@@ -135,9 +240,9 @@ export const getGuessStatuses = (
       (letter === 'Ç' && splitSolution.includes('C'))
     ) {
       statuses[i] = 'present'
-      console.log('solutionCharsTaken Antes', solutionCharsTaken[i])
+      // console.log('solutionCharsTaken Antes', solutionCharsTaken[i])
       solutionCharsTaken[i] = true
-      console.log('solutionCharsTaken Depois', solutionCharsTaken[i])
+      // console.log('solutionCharsTaken Depois', solutionCharsTaken[i])
 
       return
     } else if (

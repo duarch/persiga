@@ -76,11 +76,11 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 
 export const unicodeSplit = (word: string) => {
   // Atenção teste
-  const originalWord = word
-  console.log('Antes: ', originalWord)
+  // const originalWord = word
+  // console.log('Antes: ', originalWord)
   if (localeAwareLowerCase(word) in ACENTOS) {
     word = localeCorrectWord(word).toUpperCase()
-    console.log('Depois: ', word)
+    // console.log('Depois: ', word)
   } else {
     return new GraphemeSplitter().splitGraphemes(word)
   }
