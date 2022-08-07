@@ -8,7 +8,7 @@ export const WIN_MESSAGES = [
 ]
 export const GAME_COPIED_MESSAGE = 'Copiado!'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Não há letras suficientes'
-export const WORD_NOT_FOUND_MESSAGE = 'Palavra não encontrada'
+export const WORD_NOT_FOUND_MESSAGE = 'Essa palavra não existe'
 export const HARD_MODE_ALERT_MESSAGE =
   'O modo difícil só pode ser ativado antes de começar o jogo'
 export const HARD_MODE_DESCRIPTION =

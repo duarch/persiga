@@ -348,58 +348,161 @@ export const getGuessStatuses = (
       (x, index) => x === letter && !solutionCharsTaken[index]
     )
 
+    // I STOP HERE
+    // This search must be only for those letters remaining in the solution
+
     // inplement switch statement to handle all other cases
     switch (letter) {
       case 'A':
-        if (splitSolution.includes('A' || 'Á' || 'Ã' || 'Â')) {
-          statuses[i] = 'present'
-          solutionCharsTaken[splitSolution.indexOf('A')] = true
-          return
-        }
-        break
-      case 'Á':
-        if (splitSolution.includes('A' || 'Á' || 'Ã' || 'Â')) {
-          statuses[i] = 'present'
-          solutionCharsTaken[splitSolution.indexOf('Á')] = true
-          return
-        }
-        break
-
-      case 'Ã':
-        if (splitSolution.includes('A' || 'Á' || 'Ã' || 'Â')) {
+        if (splitSolution.includes('A')) {
+          /// TESTES
+          if (statuses[splitSolution.indexOf('A')]) {
+            console.log('status already true')
+            statuses[i] = 'absent'
+            return
+          } else {
+            statuses[i] = 'present'
+            solutionCharsTaken[splitSolution.indexOf('A')] = true
+            return
+          }
+        } else if (splitSolution.includes('Ã')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('Ã')] = true
           return
-        }
-        break
-      case 'Â':
-        if (splitSolution.includes('A' || 'Á' || 'Ã' || 'Â')) {
+        } else if (splitSolution.includes('Á')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Á')] = true
+          return
+        } else if (splitSolution.includes('Â')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('Â')] = true
           return
         }
         break
-      case 'E':
-        if (splitSolution.includes('E' || 'Ê' || 'É')) {
+
+      case 'Ã':
+        if (splitSolution.includes('A')) {
           statuses[i] = 'present'
-          solutionCharsTaken[splitSolution.indexOf('E')] = true
+          solutionCharsTaken[splitSolution.indexOf('A')] = true
+          return
+        } else if (splitSolution.includes('Ã')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ã')] = true
+          return
+        } else if (splitSolution.includes('Á')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Á')] = true
+          return
+        } else if (splitSolution.includes('Â')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Â')] = true
           return
         }
         break
-      case 'É':
-        if (splitSolution.includes('E' || 'Ê' || 'É')) {
+
+      case 'Á':
+        if (splitSolution.includes('A')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('A')] = true
+          return
+        } else if (splitSolution.includes('Ã')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ã')] = true
+          return
+        } else if (splitSolution.includes('Á')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Á')] = true
+          return
+        } else if (splitSolution.includes('Â')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Â')] = true
+          return
+        }
+        break
+
+      case 'Â':
+        if (splitSolution.includes('A')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('A')] = true
+          return
+        } else if (splitSolution.includes('Ã')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ã')] = true
+          return
+        } else if (splitSolution.includes('Á')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Á')] = true
+          return
+        } else if (splitSolution.includes('Â')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Â')] = true
+          return
+        }
+        break
+
+      //parei aqui
+      // Only test
+
+      case 'E':
+        if (splitSolution.includes('E')) {
+          // count how many times the letter is present in the solution
+          const count = splitSolution.reduce((acc, curr) => {
+            if (curr === 'E') {
+              return acc + 1
+            } else {
+              return acc
+            }
+          }, 0)
+          if (count > 1) {
+            statuses[i] = 'present'
+            solutionCharsTaken[splitSolution.indexOf('E')] = true
+            return
+          } else {
+            statuses[i] = 'absent'
+            return
+          }
+        } else if (splitSolution.includes('É')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('É')] = true
           return
-        }
-        break
-      case 'Ê':
-        if (splitSolution.includes('E' || 'Ê' || 'É')) {
+        } else if (splitSolution.includes('Ê')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('Ê')] = true
           return
         }
         break
+
+      case 'É':
+        if (splitSolution.includes('E')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('E')] = true
+          return
+        } else if (splitSolution.includes('É')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('É')] = true
+          return
+        } else if (splitSolution.includes('Ê')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ê')] = true
+          return
+        }
+        break
+      case 'Ê':
+        if (splitSolution.includes('E')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('E')] = true
+          return
+        } else if (splitSolution.includes('É')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('É')] = true
+          return
+        } else if (splitSolution.includes('Ê')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ê')] = true
+          return
+        }
+        break
+
       case 'I':
         if (splitSolution.includes('I' || 'Í')) {
           statuses[i] = 'present'
@@ -457,23 +560,28 @@ export const getGuessStatuses = (
         }
         break
       case 'C':
-        if (splitSolution.includes('C' || 'Ç')) {
+        if (splitSolution.includes('C')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('C')] = true
           return
-        }
-        break
-      case 'Ç':
-        if (splitSolution.includes('C' || 'Ç')) {
+        } else if (splitSolution.includes('Ç')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('Ç')] = true
           return
         }
         break
+
+      case 'Ç':
+        if (splitSolution.includes('C') || splitSolution.includes('Ç')) {
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('Ç')] = true
+          return
+        }
+        break
+
       default:
         break
     }
-
     if (!splitSolution.includes(letter)) {
       // handles the absent case
       statuses[i] = 'absent'

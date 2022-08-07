@@ -70,7 +70,7 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
   // if (lettersLeftArray.length > 0) {
   //   return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
   // }
-  return false
+  // return false
 }
 
 export const unicodeSplit = (word: string) => {
@@ -149,6 +149,7 @@ export const getSolution = (today: Date) => {
   const nextGameDate = getNextGameDate(today)
   const index = getIndex(today)
   const wordOfTheDay = getWordOfDay(index)
+  // const wordOfTheDay = 'DIVERGE'
 
   return {
     solution: wordOfTheDay,
