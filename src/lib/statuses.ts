@@ -138,11 +138,12 @@ export const getGuessStatuses = (
 
   // handle all correct cases first
   splitGuess.forEach((letter, i) => {
-    if (letter === splitSolution[i]) {
-      statuses[i] = 'correct'
-      solutionCharsTaken[i] = true
-      return
-    }
+    // Where this estatement shold be?
+    // if (letter === splitSolution[i]) {
+    //   statuses[i] = 'correct'
+    //   solutionCharsTaken[i] = true
+    //   return
+    // }
 
     // use switch statement to handle all other cases
     switch (letter) {
@@ -337,6 +338,11 @@ export const getGuessStatuses = (
       default:
         break
     }
+    if (letter === splitSolution[i]) {
+      statuses[i] = 'correct'
+      solutionCharsTaken[i] = true
+      return
+    }
   })
 
   // handle all present cases
@@ -445,22 +451,9 @@ export const getGuessStatuses = (
 
       case 'E':
         if (splitSolution.includes('E')) {
-          // count how many times the letter is present in the solution
-          const count = splitSolution.reduce((acc, curr) => {
-            if (curr === 'E') {
-              return acc + 1
-            } else {
-              return acc
-            }
-          }, 0)
-          if (count > 1) {
-            statuses[i] = 'present'
-            solutionCharsTaken[splitSolution.indexOf('E')] = true
-            return
-          } else {
-            statuses[i] = 'absent'
-            return
-          }
+          statuses[i] = 'present'
+          solutionCharsTaken[splitSolution.indexOf('E')] = true
+          return
         } else if (splitSolution.includes('É')) {
           statuses[i] = 'present'
           solutionCharsTaken[splitSolution.indexOf('É')] = true
