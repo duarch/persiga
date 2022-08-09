@@ -27,6 +27,7 @@ export const isWinningWord = (word: string) => {
 let jAcentos = JSON.parse(JSON.stringify(ACENTOS))
 
 export const localeCorrectWord = (word: string) => {
+  console.log('palavra antes: ', word)
   let correctWordWithAcentos = jAcentos[word.toLowerCase()]
   return correctWordWithAcentos
 }
@@ -74,8 +75,10 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 }
 
 export const unicodeSplit = (word: string) => {
+  console.log(`word is ${word}`)
   if (localeAwareLowerCase(word) in ACENTOS) {
     word = localeCorrectWord(word).toUpperCase()
+    console.log(`word now is ${word}`)
   } else {
     return new GraphemeSplitter().splitGraphemes(word)
   }
@@ -148,7 +151,7 @@ export const getWordOfDay = (index: number) => {
 export const getSolution = (today: Date) => {
   const nextGameDate = getNextGameDate(today)
   const index = getIndex(today)
-  const wordOfTheDay = getWordOfDay(index)
+  const wordOfTheDay = getWordOfDay(index - 4)
   // const wordOfTheDay = 'DIVERGE'
 
   return {
