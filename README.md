@@ -1,5 +1,8 @@
 # PERSIGA
 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/986a6710-e997-41a3-80d2-8f7f8d38536c/deploy-status)](https://app.netlify.com/sites/gregarious-khapse-742c67/deploys)
+
 This is a clone project of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
 
 [**Try out the demo!**](https://reactle.vercel.app/)
