@@ -71,6 +71,7 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
   // if (lettersLeftArray.length > 0) {
   //   return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
   // }
+  //
   // return false
 }
 
