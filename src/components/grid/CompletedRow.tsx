@@ -1,6 +1,6 @@
 import { getGuessStatuses } from '../../lib/statuses'
 import { Cell } from './Cell'
-import { unicodeSplit } from '../../lib/words'
+import { accentedGuess, unicodeSplit, solutionNoAcents } from '../../lib/words'
 
 type Props = {
   solution: string
@@ -9,8 +9,13 @@ type Props = {
 }
 
 export const CompletedRow = ({ solution, guess, isRevealing }: Props) => {
-  const statuses = getGuessStatuses(solution, guess)
-  const splitGuess = unicodeSplit(guess)
+  const noAcsolution = solutionNoAcents(solution)
+
+  const acGuess = accentedGuess(guess)
+
+  const statuses = getGuessStatuses(noAcsolution, guess)
+
+  const splitGuess = unicodeSplit(acGuess)
 
   return (
     <div className="flex justify-center mb-1">

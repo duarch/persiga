@@ -24,12 +24,26 @@ export const isWinningWord = (word: string) => {
   return solution === word
 }
 
-let jAcentos = JSON.parse(JSON.stringify(ACENTOS))
+export const jAcentos = JSON.parse(JSON.stringify(ACENTOS))
 
 export const localeCorrectWord = (word: string) => {
-  console.log('palavra antes: ', word)
   let correctWordWithAcentos = jAcentos[word.toLowerCase()]
   return correctWordWithAcentos
+}
+
+// Criar uma funcao que recebe uma palavra com acentos e retorna a mesma sem acentos
+
+export const solutionNoAcents = (word: string) => {
+  // receive a word with accents and return the same word without accents
+  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+// provide the word guess with accents
+export const accentedGuess = (word: string) => {
+  if (localeAwareLowerCase(word) in ACENTOS) {
+    word = localeCorrectWord(word).toUpperCase()
+  }
+  return word
 }
 
 // build a set of previously revealed letters - present and correct
@@ -76,13 +90,13 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 }
 
 export const unicodeSplit = (word: string) => {
-  console.log(`word is ${word}`)
-  if (localeAwareLowerCase(word) in ACENTOS) {
-    word = localeCorrectWord(word).toUpperCase()
-    console.log(`word now is ${word}`)
-  } else {
-    return new GraphemeSplitter().splitGraphemes(word)
-  }
+  // console.log(`word is ${word}`)
+  // if (localeAwareLowerCase(word) in ACENTOS) {
+  //   word = localeCorrectWord(word).toUpperCase()
+  //   console.log(`word now is ${word}`)
+  // } else {
+  //   return new GraphemeSplitter().splitGraphemes(word)
+  // }
   return new GraphemeSplitter().splitGraphemes(word)
 }
 
@@ -152,7 +166,7 @@ export const getWordOfDay = (index: number) => {
 export const getSolution = (today: Date) => {
   const nextGameDate = getNextGameDate(today)
   const index = getIndex(today)
-  const wordOfTheDay = getWordOfDay(index - 4)
+  const wordOfTheDay = getWordOfDay(index)
   // const wordOfTheDay = 'DIVERGE'
 
   return {
