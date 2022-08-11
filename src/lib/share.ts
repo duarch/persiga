@@ -19,10 +19,11 @@ export const shareStatus = (
   handleShareToClipboard: () => void
 ) => {
   const textToShare =
-    `persi.ga
-    ${GAME_TITLE} ${solutionIndex} ${
+    `${GAME_TITLE} ${solutionIndex} ${
       lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
+    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n
+
+    www.persi.ga` +
     generateEmojiGrid(
       solution,
       guesses,
