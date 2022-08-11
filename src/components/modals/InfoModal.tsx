@@ -11,7 +11,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
     <BaseModal title="Como jogar" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
         <strong>É simples mas tem que ler! </strong>
-        Adivinhe a palavra secreta em 6 tentativas. Após cada tentativa, as
+        Adivinhe a palavra secreta em 7 tentativas. Após cada tentativa, as
         cores da palavra vão mostrar o quanto você acertou da palavra secreta.
       </p>
 
@@ -63,7 +63,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="A" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Pode esquescer a letra R, pois ela não está na palavra secreta.
+        Pode esquecer a letra R, pois ela não está na palavra secreta.
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
@@ -71,12 +71,10 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <br />
         &#x1FAF6; Graça e Geysse &#x1FAF6;
         <br />
-        Esta é uma versão open source do jogo WORDLE em português -
-        <a
+        Esta é uma versão open source do jogo WORDLE em português - <a
           href="https://github.com/duarch/persiga"
           className="underline font-bold"
-        >
-          Codigo disponível no GitHub.
+        >GitHub.
         </a>{' '}
       </p>
     </BaseModal>
