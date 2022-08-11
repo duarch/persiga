@@ -1,6 +1,6 @@
 import { WORDS } from '../constants/wordlist'
 import { VALID_GUESSES } from '../constants/validGuesses'
-import { WRONG_SPOT_MESSAGE } from '../constants/strings'
+import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { ACENTOS } from '../constants/acentos'
@@ -74,19 +74,19 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 
   // Some conflit with portuguese accents - back here if someone complains on hard mode behavior
 
-  // let n
-  // for (const letter of splitWord) {
-  //   n = lettersLeftArray.indexOf(letter)
-  //   if (n !== -1) {
-  //     lettersLeftArray.splice(n, 1)
-  //   }
-  // }
-  // console.log(`lettersLeftArray ${lettersLeftArray}`)
-  // if (lettersLeftArray.length > 0) {
-  //   return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
-  // }
-  //
-  // return false
+  let n
+  for (const letter of splitWord) {
+    n = lettersLeftArray.indexOf(letter)
+    if (n !== -1) {
+      lettersLeftArray.splice(n, 1)
+    }
+  }
+  console.log(`lettersLeftArray ${lettersLeftArray}`)
+  if (lettersLeftArray.length > 0) {
+    return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
+  }
+
+  return false
 }
 
 export const unicodeSplit = (word: string) => {
