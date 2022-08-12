@@ -8,6 +8,11 @@ const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
 const browser = parser.getBrowser()
 const device = parser.getDevice()
+// const bestStreak = (gameStats: GameStats) => {
+//   return gameStats.bestStreak
+// }
+
+// console.log(bestStreak)
 
 export const shareStatus = (
   solution: string,
@@ -26,7 +31,8 @@ export const shareStatus = (
       solution,
       guesses,
       getEmojiTiles(isDarkMode, isHighContrastMode)
-    )
+    ) +
+    `\n www.persi.ga`
 
   const shareData = { text: textToShare }
 

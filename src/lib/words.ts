@@ -1,6 +1,6 @@
 import { WORDS } from '../constants/wordlist'
 import { VALID_GUESSES } from '../constants/validGuesses'
-import { WRONG_SPOT_MESSAGE } from '../constants/strings'
+import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 import { ACENTOS } from '../constants/acentos'
@@ -24,11 +24,26 @@ export const isWinningWord = (word: string) => {
   return solution === word
 }
 
-let jAcentos = JSON.parse(JSON.stringify(ACENTOS))
+export const jAcentos = JSON.parse(JSON.stringify(ACENTOS))
 
 export const localeCorrectWord = (word: string) => {
   let correctWordWithAcentos = jAcentos[word.toLowerCase()]
   return correctWordWithAcentos
+}
+
+// Criar uma funcao que recebe uma palavra com acentos e retorna a mesma sem acentos
+
+export const solutionNoAcents = (word: string) => {
+  // receive a word with accents and return the same word without accents
+  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+// provide the word guess with accents
+export const accentedGuess = (word: string) => {
+  if (localeAwareLowerCase(word) in ACENTOS) {
+    word = localeCorrectWord(word).toUpperCase()
+  }
+  return word
 }
 
 // build a set of previously revealed letters - present and correct
@@ -59,26 +74,29 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 
   // Some conflit with portuguese accents - back here if someone complains on hard mode behavior
 
-  // let n
-  // for (const letter of splitWord) {
-  //   n = lettersLeftArray.indexOf(letter)
-  //   if (n !== -1) {
-  //     lettersLeftArray.splice(n, 1)
-  //   }
-  // }
-  // console.log(`lettersLeftArray ${lettersLeftArray}`)
-  // if (lettersLeftArray.length > 0) {
-  //   return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
-  // }
-  // return false
+  let n
+  for (const letter of splitWord) {
+    n = lettersLeftArray.indexOf(letter)
+    if (n !== -1) {
+      lettersLeftArray.splice(n, 1)
+    }
+  }
+  console.log(`lettersLeftArray ${lettersLeftArray}`)
+  if (lettersLeftArray.length > 0) {
+    return NOT_CONTAINED_MESSAGE(lettersLeftArray[0])
+  }
+
+  return false
 }
 
 export const unicodeSplit = (word: string) => {
-  if (localeAwareLowerCase(word) in ACENTOS) {
-    word = localeCorrectWord(word).toUpperCase()
-  } else {
-    return new GraphemeSplitter().splitGraphemes(word)
-  }
+  // console.log(`word is ${word}`)
+  // if (localeAwareLowerCase(word) in ACENTOS) {
+  //   word = localeCorrectWord(word).toUpperCase()
+  //   console.log(`word now is ${word}`)
+  // } else {
+  //   return new GraphemeSplitter().splitGraphemes(word)
+  // }
   return new GraphemeSplitter().splitGraphemes(word)
 }
 
