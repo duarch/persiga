@@ -3,13 +3,16 @@ import { solutionIndex, unicodeSplit } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { UAParser } from 'ua-parser-js'
-import { GameStats } from './localStorage'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
 const browser = parser.getBrowser()
 const device = parser.getDevice()
-const streak = GameStats.bestStreak
+// const bestStreak = (gameStats: GameStats) => {
+//   return gameStats.bestStreak
+// }
+
+// console.log(bestStreak)
 
 export const shareStatus = (
   solution: string,
@@ -23,8 +26,7 @@ export const shareStatus = (
   const textToShare =
     `${GAME_TITLE} ${solutionIndex} ${
       lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n
-    F ${streak}\n` +
+    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
     generateEmojiGrid(
       solution,
       guesses,
