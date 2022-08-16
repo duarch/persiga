@@ -33,7 +33,7 @@ export const localeCorrectWord = (word: string) => {
 
 // Criar uma funcao que recebe uma palavra com acentos e retorna a mesma sem acentos
 
-export const solutionNoAcents = (word: string) => {
+export const solutionNoAccents = (word: string) => {
   // receive a word with accents and return the same word without accents
   return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }

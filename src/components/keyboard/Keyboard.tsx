@@ -2,7 +2,7 @@ import { getStatuses } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
 import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
-import { localeAwareUpperCase, solutionNoAcents } from '../../lib/words'
+import { localeAwareUpperCase, solutionNoAccents } from '../../lib/words'
 
 type Props = {
   onChar: (value: string) => void
@@ -21,8 +21,8 @@ export const Keyboard = ({
   guesses,
   isRevealing,
 }: Props) => {
-  const noAcsolution = solutionNoAcents(solution)
-  const charStatuses = getStatuses(noAcsolution, guesses)
+  const noAccentSolution = solutionNoAccents(solution)
+  const charStatuses = getStatuses(noAccentSolution, guesses)
 
   const onClick = (value: string) => {
     if (value === 'ENTER') {
