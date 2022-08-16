@@ -1,5 +1,5 @@
 import { getGuessStatuses } from './statuses'
-import { solutionIndex, unicodeSplit } from './words'
+import { solutionIndex, unicodeSplit, solutionNoAccents } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { UAParser } from 'ua-parser-js'
@@ -60,7 +60,8 @@ export const generateEmojiGrid = (
 ) => {
   return guesses
     .map((guess) => {
-      const status = getGuessStatuses(solution, guess)
+      const noAccentsolution = solutionNoAccents(solution)
+      const status = getGuessStatuses(noAccentsolution, guess)
       const splitGuess = unicodeSplit(guess)
 
       return splitGuess

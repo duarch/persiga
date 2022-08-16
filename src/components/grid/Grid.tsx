@@ -22,9 +22,6 @@ export const Grid = ({
     guesses.length < MAX_CHALLENGES - 1
       ? Array.from(Array(MAX_CHALLENGES - 1 - guesses.length))
       : []
-  // console.log('solution', solution)
-  // console.log('guesses', guesses)
-  // console.log('currentGuess', currentGuess)
   return (
     <>
       {guesses.map((guess, i) => (
