@@ -71,10 +71,12 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <br />
         &#x1FAF6; Graça e Geysse &#x1FAF6;
         <br />
-        Esta é uma versão open source do jogo WORDLE em português - <a
+        Esta é uma versão open source do jogo WORDLE em português -{' '}
+        <a
           href="https://github.com/duarch/persiga"
           className="underline font-bold"
-        >GitHub.
+        >
+          GitHub.
         </a>{' '}
       </p>
     </BaseModal>
