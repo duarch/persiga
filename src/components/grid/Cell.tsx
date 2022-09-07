@@ -8,6 +8,7 @@ type Props = {
   status?: CharStatus
   isRevealing?: boolean
   isCompleted?: boolean
+  onClick?: (value: string) => void
   position?: number
 }
 
@@ -18,6 +19,10 @@ export const Cell = ({
   isCompleted,
   position = 0,
 }: Props) => {
+  const handleClick: React.MouseEventHandler<HTMLElement> = (event) => {
+    event.currentTarget.blur()
+  }
+
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
   const animationDelay = `${position * REVEAL_TIME_MS}ms`
@@ -28,6 +33,7 @@ export const Cell = ({
     {
       'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
         !status,
+      'cell-edit': value === '',
       'border-black dark:border-slate-100': value && !status,
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
         status === 'absent',
@@ -46,7 +52,11 @@ export const Cell = ({
 
   return (
     <div className={classes} style={{ animationDelay }}>
-      <div className="letter-container" style={{ animationDelay }}>
+      <div
+        className="letter-container"
+        style={{ animationDelay }}
+        onClick={handleClick}
+      >
         {value}
       </div>
     </div>

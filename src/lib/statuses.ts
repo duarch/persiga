@@ -1,5 +1,7 @@
 import { unicodeSplit } from './words'
 
+// original code
+// export type CharStatus = 'absent' | 'present' | 'correct'
 export type CharStatus = 'absent' | 'present' | 'correct'
 
 export const getStatuses = (

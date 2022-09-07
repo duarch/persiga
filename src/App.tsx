@@ -173,12 +173,21 @@ function App() {
     }
   }, [isGameWon, isGameLost, showSuccessAlert])
 
+  // test area
+  // const onClickCell = (cell: number) => {
+  //   console.log('Esta minha cell é ', cell)
+  // }
+
+  // end of test
+
   const onChar = (value: string) => {
     if (
       unicodeLength(`${currentGuess}${value}`) <= solution.length &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
+      // console.log(`Value is ${value}`)
+      // console.log(`Current guess is ${currentGuess}`)
       setCurrentGuess(`${currentGuess}${value}`)
     }
   }
@@ -268,6 +277,7 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            onClick={onChar}
           />
         </div>
         <Keyboard
