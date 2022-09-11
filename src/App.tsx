@@ -277,7 +277,7 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
-            onClick={onChar}
+            // onClick={onChar}
           />
         </div>
         <Keyboard

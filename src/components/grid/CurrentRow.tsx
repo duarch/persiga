@@ -5,33 +5,34 @@ import GraphemeSplitter from 'grapheme-splitter'
 type Props = {
   guess: string
   className: string
-  onChar: (value: string) => void
+  // onChar: (value: string) => void
 }
 
 export const CurrentSplit = (currentWord: string) => {
   return new GraphemeSplitter().splitGraphemes(currentWord)
 }
 
-export const CurrentRow = ({ guess, className, onChar }: Props) => {
+export const CurrentRow = ({ guess, className }: Props) => {
   // console.log(className)
   const splitGuess = CurrentSplit(guess)
   // console.log(splitGuess)
   const emptyCells = Array.from(Array(solution.length - splitGuess.length))
   // console.log('This is emptyCells ', emptyCells)
   const classes = `flex justify-center mb-1 ${className}`
-  const onClick = (value: string) => {
-    onChar(value)
-  }
+  // const onClick = () => {
+  //   console.log('Deu Certo')
+  //   return EditCell()
+  // }
   return (
     // parei aqui
-    // tenho que descobrir como passar a posição para inserir o caracter correto
+    // tenho que descobrir como acionar o edit mode só na Current Row
 
     <div className={classes}>
       {splitGuess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}
       {emptyCells.map((_, i) => {
-        if (i === 0) return <Cell key={i} value={''} onClick={onClick} />
+        if (i === 0) return <Cell key={i} value={''} />
         return <Cell key={i} />
       })}
     </div>

@@ -2,6 +2,7 @@ import { CharStatus } from '../../lib/statuses'
 import classnames from 'classnames'
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
+import { EditCell } from './EditCell'
 
 type Props = {
   value?: string
@@ -19,9 +20,7 @@ export const Cell = ({
   isCompleted,
   position = 0,
 }: Props) => {
-  const handleClick: React.MouseEventHandler<HTMLElement> = (event) => {
-    event.currentTarget.blur()
-  }
+  const handleClick = EditCell()
 
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -51,12 +50,8 @@ export const Cell = ({
   )
 
   return (
-    <div className={classes} style={{ animationDelay }}>
-      <div
-        className="letter-container"
-        style={{ animationDelay }}
-        onClick={handleClick}
-      >
+    <div className={classes} style={{ animationDelay }} onClick={handleClick}>
+      <div className="letter-container" style={{ animationDelay }}>
         {value}
       </div>
     </div>
