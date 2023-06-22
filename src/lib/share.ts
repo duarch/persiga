@@ -32,7 +32,7 @@ export const shareStatus = (
       guesses,
       getEmojiTiles(isDarkMode, isHighContrastMode)
     ) +
-    `\n www.persi.ga`
+    `\n persiga.duar.ch`
 
   const shareData = { text: textToShare }
 
