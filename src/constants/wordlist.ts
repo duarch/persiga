@@ -1388,7 +1388,6 @@ export const WORDS = [
   'válidos',
   'camarão',
   'devoção',
-  'devoção',
   'superou',
   'pesadas',
   'atelier',
