@@ -11,18 +11,16 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # ou '24' se preferir
+          node-version: '18'
 
-      - name: Debug node/npm
+      - name: Install dependencies (optional)
+        # opcional: se você quer usar a versão no package.json do repositório
         run: |
-          node -v
-          npm -v
-          which npm || true
+          if [ -f package-lock.json ] || [ -f package.json ]; then
+            npm ci
+          fi
 
-      - name: Run creyD/prettier_action
-        uses: creyD/prettier_action@v4.2
-        with:
-          prettier_options: --check src
-          commit_message: Prettified Code!
-          prettier_version: 'latest' # força a action a instalar o prettier
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Prettier via npx
+        run: |
+          # utiliza a versão mais recente do prettier sem alterar o repo
+          npx prettier@latest --check src
