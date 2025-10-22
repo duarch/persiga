@@ -9,8 +9,25 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          prettier_options: --check src
+          node-version: '18'
+
+      - name: Install dependencies (if present)
+        run: |
+          if [ -f package-lock.json ] || [ -f package.json ]; then
+            npm ci
+          fi
+
+      - name: Prettier check
+        run: |
+          # Use project's installed prettier if available, otherwise use npx to run latest
+          if [ -f node_modules/.bin/prettier ]; then
+            npx prettier --check src
+          else
+            npx prettier@latest --check src
+          fi
