@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -24,10 +27,29 @@ jobs:
           fi
 
       - name: Prettier check
+        id: prettier_check
         run: |
-          # Use project's installed prettier if available, otherwise use npx to run latest
           if [ -f node_modules/.bin/prettier ]; then
             npx prettier --check src
           else
             npx prettier@latest --check src
+          fi
+
+      - name: Auto-format and push (only on push events)
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          if [ -f node_modules/.bin/prettier ]; then
+            npx prettier --write src
+          else
+            npx prettier@latest --write src
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          # se houver mudanças, commita e faz push
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: format with Prettier (CI)"
+            git push
+          else
+            echo "No formatting changes to commit."
           fi
