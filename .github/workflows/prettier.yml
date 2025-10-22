@@ -1,0 +1,28 @@
+name: Prettier check
+on: [push, pull_request]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # ou '24' se preferir
+
+      - name: Debug node/npm
+        run: |
+          node -v
+          npm -v
+          which npm || true
+
+      - name: Run creyD/prettier_action
+        uses: creyD/prettier_action@v4.2
+        with:
+          prettier_options: --check src
+          commit_message: Prettified Code!
+          prettier_version: 'latest' # força a action a instalar o prettier
+          github_token: ${{ secrets.GITHUB_TOKEN }}
