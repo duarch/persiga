@@ -24,7 +24,6 @@ import {
   isWinningWord,
   solution,
   findFirstUnusedReveal,
-  unicodeLength,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -33,8 +32,6 @@ import {
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
 } from './lib/localStorage'
-import { default as GraphemeSplitter } from 'grapheme-splitter'
-
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { useAlert } from './context/AlertContext'
@@ -49,7 +46,9 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuessSlots, setCurrentGuessSlots] = useState<string[]>(() =>
+    Array(solution.length).fill('')
+  )
   const [cursorIndex, setCursorIndex] = useState(0)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -151,20 +150,14 @@ function App() {
     setCurrentRowClass('')
   }
 
-  const splitCurrentGuess = () =>
-    new GraphemeSplitter().splitGraphemes(currentGuess)
+  const currentGuess = currentGuessSlots.join('')
 
-  const clampCursorIndex = (index: number, guessLength: number) => {
-    const furthestIndex = Math.min(
-      solution.length - 1,
-      Math.max(guessLength, 0)
-    )
-    return Math.max(0, Math.min(index, furthestIndex))
+  const clampCursorIndex = (index: number) => {
+    return Math.max(0, Math.min(index, solution.length - 1))
   }
 
   const handleCellClick = (index: number) => {
-    const guessLength = splitCurrentGuess().length
-    setCursorIndex(clampCursorIndex(index, guessLength))
+    setCursorIndex(clampCursorIndex(index))
   }
 
   useEffect(() => {
@@ -195,35 +188,22 @@ function App() {
       return
     }
 
-    const splitGuess = splitCurrentGuess()
-    const insertIndex = clampCursorIndex(cursorIndex, splitGuess.length)
-    const nextSplit = [...splitGuess]
+    const nextSlots = [...currentGuessSlots]
+    const insertIndex = clampCursorIndex(cursorIndex)
 
-    if (insertIndex < nextSplit.length) {
-      nextSplit[insertIndex] = value
-    } else if (nextSplit.length < solution.length) {
-      nextSplit.push(value)
-    }
+    nextSlots[insertIndex] = value
 
-    const nextGuess = nextSplit.join('')
-    setCurrentGuess(nextGuess)
-    setCursorIndex(clampCursorIndex(insertIndex + 1, nextSplit.length))
+    setCurrentGuessSlots(nextSlots)
+    setCursorIndex(clampCursorIndex(insertIndex + 1))
   }
 
   const onDelete = () => {
-    const splitGuess = splitCurrentGuess()
+    const deleteIndex = clampCursorIndex(cursorIndex)
+    const nextSlots = [...currentGuessSlots]
+    nextSlots[deleteIndex] = ''
 
-    if (splitGuess.length === 0) {
-      return
-    }
-
-    const deleteIndex =
-      cursorIndex >= splitGuess.length ? splitGuess.length - 1 : cursorIndex
-    const nextSplit = [...splitGuess]
-    nextSplit.splice(deleteIndex, 1)
-
-    setCurrentGuess(nextSplit.join(''))
-    setCursorIndex(clampCursorIndex(deleteIndex, nextSplit.length))
+    setCurrentGuessSlots(nextSlots)
+    setCursorIndex(clampCursorIndex(deleteIndex))
   }
 
   const onEnter = () => {
@@ -231,7 +211,8 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
+    const hasEmptySlots = currentGuessSlots.some((letter) => letter === '')
+    if (hasEmptySlots) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -265,13 +246,9 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess)
 
-    if (
-      unicodeLength(currentGuess) === solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
+    if (guesses.length < MAX_CHALLENGES && !isGameWon) {
       setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      setCurrentGuessSlots(Array(solution.length).fill(''))
       setCursorIndex(0)
 
       if (winningWord) {
@@ -303,7 +280,7 @@ function App() {
           <Grid
             solution={solution}
             guesses={guesses}
-            currentGuess={currentGuess}
+            currentGuessLetters={currentGuessSlots}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
             cursorIndex={cursorIndex}

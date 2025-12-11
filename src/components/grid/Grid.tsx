@@ -6,7 +6,7 @@ import { EmptyRow } from './EmptyRow'
 type Props = {
   solution: string
   guesses: string[]
-  currentGuess: string
+  currentGuessLetters: string[]
   isRevealing?: boolean
   currentRowClassName: string
   cursorIndex: number
@@ -16,7 +16,7 @@ type Props = {
 export const Grid = ({
   solution,
   guesses,
-  currentGuess,
+  currentGuessLetters,
   isRevealing,
   currentRowClassName,
   cursorIndex,
@@ -38,7 +38,7 @@ export const Grid = ({
       ))}
       {guesses.length < MAX_CHALLENGES && (
         <CurrentRow
-          guess={currentGuess}
+          letters={currentGuessLetters}
           className={currentRowClassName}
           cursorIndex={cursorIndex}
           onCellClick={onCellClick}

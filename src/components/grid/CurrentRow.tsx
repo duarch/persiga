@@ -1,25 +1,19 @@
 import { Cell } from './Cell'
 import { solution } from '../../lib/words'
-import GraphemeSplitter from 'grapheme-splitter'
 
 type Props = {
-  guess: string
+  letters: string[]
   className: string
   cursorIndex: number
   onCellClick: (index: number) => void
 }
 
-export const CurrentSplit = (currentWord: string) => {
-  return new GraphemeSplitter().splitGraphemes(currentWord)
-}
-
 export const CurrentRow = ({
-  guess,
+  letters,
   className,
   cursorIndex,
   onCellClick,
 }: Props) => {
-  const splitGuess = CurrentSplit(guess)
   const classes = `flex justify-center mb-1 ${className}`
   const totalCells = Array.from(Array(solution.length))
 
@@ -28,7 +22,7 @@ export const CurrentRow = ({
       {totalCells.map((_, i) => (
         <Cell
           key={i}
-          value={splitGuess[i]}
+          value={letters[i]}
           isActive={cursorIndex === i}
           onClick={() => onCellClick(i)}
         />
