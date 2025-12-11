@@ -4,7 +4,7 @@ import { solution } from '../../lib/words'
 type Props = {
   letters: string[]
   className: string
-  cursorIndex: number
+  cursorIndex: number | null
   onCellClick: (index: number) => void
 }
 

@@ -9,7 +9,7 @@ type Props = {
   currentGuessLetters: string[]
   isRevealing?: boolean
   currentRowClassName: string
-  cursorIndex: number
+  cursorIndex: number | null
   onCellClick: (index: number) => void
 }
 

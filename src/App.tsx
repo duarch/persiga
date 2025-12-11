@@ -49,7 +49,7 @@ function App() {
   const [currentGuessSlots, setCurrentGuessSlots] = useState<string[]>(() =>
     Array(solution.length).fill('')
   )
-  const [cursorIndex, setCursorIndex] = useState(0)
+  const [cursorIndex, setCursorIndex] = useState<number | null>(0)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -156,6 +156,28 @@ function App() {
     return Math.max(0, Math.min(index, solution.length - 1))
   }
 
+  const findNextEmptySlot = (
+    slots: string[],
+    startIndex: number = 0
+  ): number | null => {
+    for (let offset = 0; offset < solution.length; offset++) {
+      const idx = (startIndex + offset) % solution.length
+      if (slots[idx] === '') {
+        return idx
+      }
+    }
+    return null
+  }
+
+  const findLastFilledSlot = (slots: string[]): number | null => {
+    for (let i = slots.length - 1; i >= 0; i--) {
+      if (slots[i] !== '') {
+        return i
+      }
+    }
+    return null
+  }
+
   const handleCellClick = (index: number) => {
     setCursorIndex(clampCursorIndex(index))
   }
@@ -188,22 +210,36 @@ function App() {
       return
     }
 
-    const nextSlots = [...currentGuessSlots]
-    const insertIndex = clampCursorIndex(cursorIndex)
+    const targetIndex =
+      cursorIndex !== null
+        ? clampCursorIndex(cursorIndex)
+        : findNextEmptySlot(currentGuessSlots) ?? 0
 
-    nextSlots[insertIndex] = value
+    const nextSlots = [...currentGuessSlots]
+    nextSlots[targetIndex] = value
+
+    const nextEmpty = findNextEmptySlot(nextSlots, targetIndex + 1)
 
     setCurrentGuessSlots(nextSlots)
-    setCursorIndex(clampCursorIndex(insertIndex + 1))
+    setCursorIndex(nextEmpty)
   }
 
   const onDelete = () => {
-    const deleteIndex = clampCursorIndex(cursorIndex)
+    const deleteIndex =
+      cursorIndex !== null
+        ? clampCursorIndex(cursorIndex)
+        : findLastFilledSlot(currentGuessSlots)
+
     const nextSlots = [...currentGuessSlots]
-    nextSlots[deleteIndex] = ''
+    if (deleteIndex !== null) {
+      nextSlots[deleteIndex] = ''
+    }
 
     setCurrentGuessSlots(nextSlots)
-    setCursorIndex(clampCursorIndex(deleteIndex))
+    if (deleteIndex !== null) {
+      const nextEmpty = findNextEmptySlot(nextSlots, deleteIndex)
+      setCursorIndex(nextEmpty ?? deleteIndex)
+    }
   }
 
   const onEnter = () => {

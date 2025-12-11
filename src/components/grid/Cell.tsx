@@ -46,7 +46,9 @@ export const Cell = ({
       'cell-fill-animation': isFilled,
       'cell-reveal': shouldReveal,
       'border-amber-500 ring-2 ring-amber-400 dark:border-amber-300 dark:ring-amber-300/70':
-        isActive && !isCompleted,
+        isActive && !isCompleted && !isHighContrast,
+      'border-fuchsia-500 ring-2 ring-fuchsia-400 dark:border-fuchsia-300 dark:ring-fuchsia-200':
+        isActive && !isCompleted && isHighContrast,
       'cursor-pointer': !!onClick,
     }
   )
