@@ -50,6 +50,7 @@ function App() {
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
   const [currentGuess, setCurrentGuess] = useState('')
+  const [cursorIndex, setCursorIndex] = useState(0)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -150,6 +151,22 @@ function App() {
     setCurrentRowClass('')
   }
 
+  const splitCurrentGuess = () =>
+    new GraphemeSplitter().splitGraphemes(currentGuess)
+
+  const clampCursorIndex = (index: number, guessLength: number) => {
+    const furthestIndex = Math.min(
+      solution.length - 1,
+      Math.max(guessLength, 0)
+    )
+    return Math.max(0, Math.min(index, furthestIndex))
+  }
+
+  const handleCellClick = (index: number) => {
+    const guessLength = splitCurrentGuess().length
+    setCursorIndex(clampCursorIndex(index, guessLength))
+  }
+
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
   }, [guesses])
@@ -174,19 +191,39 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
-    if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+    if (guesses.length >= MAX_CHALLENGES || isGameWon || isGameLost) {
+      return
     }
+
+    const splitGuess = splitCurrentGuess()
+    const insertIndex = clampCursorIndex(cursorIndex, splitGuess.length)
+    const nextSplit = [...splitGuess]
+
+    if (insertIndex < nextSplit.length) {
+      nextSplit[insertIndex] = value
+    } else if (nextSplit.length < solution.length) {
+      nextSplit.push(value)
+    }
+
+    const nextGuess = nextSplit.join('')
+    setCurrentGuess(nextGuess)
+    setCursorIndex(clampCursorIndex(insertIndex + 1, nextSplit.length))
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-    )
+    const splitGuess = splitCurrentGuess()
+
+    if (splitGuess.length === 0) {
+      return
+    }
+
+    const deleteIndex =
+      cursorIndex >= splitGuess.length ? splitGuess.length - 1 : cursorIndex
+    const nextSplit = [...splitGuess]
+    nextSplit.splice(deleteIndex, 1)
+
+    setCurrentGuess(nextSplit.join(''))
+    setCursorIndex(clampCursorIndex(deleteIndex, nextSplit.length))
   }
 
   const onEnter = () => {
@@ -235,6 +272,7 @@ function App() {
     ) {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
+      setCursorIndex(0)
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
@@ -268,6 +306,8 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            cursorIndex={cursorIndex}
+            onCellClick={handleCellClick}
           />
         </div>
         <Keyboard

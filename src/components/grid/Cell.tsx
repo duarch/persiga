@@ -9,6 +9,8 @@ type Props = {
   isRevealing?: boolean
   isCompleted?: boolean
   position?: number
+  isActive?: boolean
+  onClick?: () => void
 }
 
 export const Cell = ({
@@ -17,6 +19,8 @@ export const Cell = ({
   isRevealing,
   isCompleted,
   position = 0,
+  isActive,
+  onClick,
 }: Props) => {
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -41,11 +45,14 @@ export const Cell = ({
         status === 'present' && !isHighContrast,
       'cell-fill-animation': isFilled,
       'cell-reveal': shouldReveal,
+      'border-amber-500 ring-2 ring-amber-400 dark:border-amber-300 dark:ring-amber-300/70':
+        isActive && !isCompleted,
+      'cursor-pointer': !!onClick,
     }
   )
 
   return (
-    <div className={classes} style={{ animationDelay }}>
+    <div className={classes} style={{ animationDelay }} onClick={onClick}>
       <div className="letter-container" style={{ animationDelay }}>
         {value}
       </div>
