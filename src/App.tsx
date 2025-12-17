@@ -169,13 +169,20 @@ function App() {
     return null
   }
 
-  const findLastFilledSlot = (slots: string[]): number | null => {
-    for (let i = slots.length - 1; i >= 0; i--) {
+  const findPreviousFilledSlot = (
+    slots: string[],
+    startIndex: number = slots.length - 1
+  ): number | null => {
+    for (let i = startIndex; i >= 0; i--) {
       if (slots[i] !== '') {
         return i
       }
     }
     return null
+  }
+
+  const findLastFilledSlot = (slots: string[]): number | null => {
+    return findPreviousFilledSlot(slots)
   }
 
   const handleCellClick = (index: number) => {
@@ -210,36 +217,69 @@ function App() {
       return
     }
 
+    const hasEmptySlots = currentGuessSlots.includes('')
     const targetIndex =
       cursorIndex !== null
         ? clampCursorIndex(cursorIndex)
-        : findNextEmptySlot(currentGuessSlots) ?? 0
+        : hasEmptySlots
+        ? findNextEmptySlot(currentGuessSlots) ?? 0
+        : null
+
+    if (targetIndex === null) {
+      return
+    }
 
     const nextSlots = [...currentGuessSlots]
     nextSlots[targetIndex] = value
 
     const nextEmpty = findNextEmptySlot(nextSlots, targetIndex + 1)
-
     setCurrentGuessSlots(nextSlots)
-    setCursorIndex(nextEmpty)
+
+    if (!nextSlots.includes('')) {
+      setCursorIndex(null)
+      return
+    }
+
+    if (nextEmpty !== null) {
+      setCursorIndex(nextEmpty)
+      return
+    }
+
+    if (cursorIndex !== null) {
+      const nextIndex = (targetIndex + 1) % solution.length
+      setCursorIndex(nextIndex)
+      return
+    }
+
+    setCursorIndex(null)
   }
 
   const onDelete = () => {
-    const deleteIndex =
-      cursorIndex !== null
-        ? clampCursorIndex(cursorIndex)
-        : findLastFilledSlot(currentGuessSlots)
+    if (guesses.length >= MAX_CHALLENGES || isGameWon || isGameLost) {
+      return
+    }
+
+    const pointerIndex =
+      cursorIndex !== null ? clampCursorIndex(cursorIndex) : null
+
+    let deleteIndex: number | null = null
+    if (pointerIndex === null) {
+      deleteIndex = findLastFilledSlot(currentGuessSlots)
+    } else if (currentGuessSlots[pointerIndex] !== '') {
+      deleteIndex = pointerIndex
+    } else {
+      deleteIndex = findPreviousFilledSlot(currentGuessSlots, pointerIndex - 1)
+    }
+
+    if (deleteIndex === null) {
+      return
+    }
 
     const nextSlots = [...currentGuessSlots]
-    if (deleteIndex !== null) {
-      nextSlots[deleteIndex] = ''
-    }
+    nextSlots[deleteIndex] = ''
 
     setCurrentGuessSlots(nextSlots)
-    if (deleteIndex !== null) {
-      const nextEmpty = findNextEmptySlot(nextSlots, deleteIndex)
-      setCursorIndex(nextEmpty ?? deleteIndex)
-    }
+    setCursorIndex(deleteIndex)
   }
 
   const onEnter = () => {
@@ -303,6 +343,8 @@ function App() {
     }
   }
 
+  const shouldHideCursor = isRevealing || isGameWon || isGameLost
+
   return (
     <div className="h-screen flex flex-col">
       <Navbar
@@ -319,7 +361,7 @@ function App() {
             currentGuessLetters={currentGuessSlots}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
-            cursorIndex={cursorIndex}
+            cursorIndex={shouldHideCursor ? null : cursorIndex}
             onCellClick={handleCellClick}
           />
         </div>
