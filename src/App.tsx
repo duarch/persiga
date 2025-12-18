@@ -24,7 +24,6 @@ import {
   isWinningWord,
   solution,
   findFirstUnusedReveal,
-  unicodeLength,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -33,8 +32,6 @@ import {
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
 } from './lib/localStorage'
-import { default as GraphemeSplitter } from 'grapheme-splitter'
-
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { useAlert } from './context/AlertContext'
@@ -49,7 +46,10 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuessSlots, setCurrentGuessSlots] = useState<string[]>(() =>
+    Array(solution.length).fill('')
+  )
+  const [cursorIndex, setCursorIndex] = useState<number | null>(0)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -150,6 +150,45 @@ function App() {
     setCurrentRowClass('')
   }
 
+  const currentGuess = currentGuessSlots.join('')
+
+  const clampCursorIndex = (index: number) => {
+    return Math.max(0, Math.min(index, solution.length - 1))
+  }
+
+  const findNextEmptySlot = (
+    slots: string[],
+    startIndex: number = 0
+  ): number | null => {
+    for (let offset = 0; offset < solution.length; offset++) {
+      const idx = (startIndex + offset) % solution.length
+      if (slots[idx] === '') {
+        return idx
+      }
+    }
+    return null
+  }
+
+  const findPreviousFilledSlot = (
+    slots: string[],
+    startIndex: number = slots.length - 1
+  ): number | null => {
+    for (let i = startIndex; i >= 0; i--) {
+      if (slots[i] !== '') {
+        return i
+      }
+    }
+    return null
+  }
+
+  const findLastFilledSlot = (slots: string[]): number | null => {
+    return findPreviousFilledSlot(slots)
+  }
+
+  const handleCellClick = (index: number) => {
+    setCursorIndex(clampCursorIndex(index))
+  }
+
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
   }, [guesses])
@@ -174,19 +213,73 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
-    if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+    if (guesses.length >= MAX_CHALLENGES || isGameWon || isGameLost) {
+      return
     }
+
+    const hasEmptySlots = currentGuessSlots.includes('')
+    const targetIndex =
+      cursorIndex !== null
+        ? clampCursorIndex(cursorIndex)
+        : hasEmptySlots
+        ? findNextEmptySlot(currentGuessSlots) ?? 0
+        : null
+
+    if (targetIndex === null) {
+      return
+    }
+
+    const nextSlots = [...currentGuessSlots]
+    nextSlots[targetIndex] = value
+
+    const nextEmpty = findNextEmptySlot(nextSlots, targetIndex + 1)
+    setCurrentGuessSlots(nextSlots)
+
+    if (!nextSlots.includes('')) {
+      setCursorIndex(null)
+      return
+    }
+
+    if (nextEmpty !== null) {
+      setCursorIndex(nextEmpty)
+      return
+    }
+
+    if (cursorIndex !== null) {
+      const nextIndex = (targetIndex + 1) % solution.length
+      setCursorIndex(nextIndex)
+      return
+    }
+
+    setCursorIndex(null)
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-    )
+    if (guesses.length >= MAX_CHALLENGES || isGameWon || isGameLost) {
+      return
+    }
+
+    const pointerIndex =
+      cursorIndex !== null ? clampCursorIndex(cursorIndex) : null
+
+    let deleteIndex: number | null = null
+    if (pointerIndex === null) {
+      deleteIndex = findLastFilledSlot(currentGuessSlots)
+    } else if (currentGuessSlots[pointerIndex] !== '') {
+      deleteIndex = pointerIndex
+    } else {
+      deleteIndex = findPreviousFilledSlot(currentGuessSlots, pointerIndex - 1)
+    }
+
+    if (deleteIndex === null) {
+      return
+    }
+
+    const nextSlots = [...currentGuessSlots]
+    nextSlots[deleteIndex] = ''
+
+    setCurrentGuessSlots(nextSlots)
+    setCursorIndex(deleteIndex)
   }
 
   const onEnter = () => {
@@ -194,7 +287,8 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
+    const hasEmptySlots = currentGuessSlots.some((letter) => letter === '')
+    if (hasEmptySlots) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -228,13 +322,10 @@ function App() {
 
     const winningWord = isWinningWord(currentGuess)
 
-    if (
-      unicodeLength(currentGuess) === solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
+    if (guesses.length < MAX_CHALLENGES && !isGameWon) {
       setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      setCurrentGuessSlots(Array(solution.length).fill(''))
+      setCursorIndex(0)
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
@@ -252,6 +343,8 @@ function App() {
     }
   }
 
+  const shouldHideCursor = isRevealing || isGameWon || isGameLost
+
   return (
     <div className="h-screen flex flex-col">
       <Navbar
@@ -265,9 +358,11 @@ function App() {
           <Grid
             solution={solution}
             guesses={guesses}
-            currentGuess={currentGuess}
+            currentGuessLetters={currentGuessSlots}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            cursorIndex={shouldHideCursor ? null : cursorIndex}
+            onCellClick={handleCellClick}
           />
         </div>
         <Keyboard

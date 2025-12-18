@@ -6,17 +6,21 @@ import { EmptyRow } from './EmptyRow'
 type Props = {
   solution: string
   guesses: string[]
-  currentGuess: string
+  currentGuessLetters: string[]
   isRevealing?: boolean
   currentRowClassName: string
+  cursorIndex: number | null
+  onCellClick: (index: number) => void
 }
 
 export const Grid = ({
   solution,
   guesses,
-  currentGuess,
+  currentGuessLetters,
   isRevealing,
   currentRowClassName,
+  cursorIndex,
+  onCellClick,
 }: Props) => {
   const empties =
     guesses.length < MAX_CHALLENGES - 1
@@ -33,7 +37,12 @@ export const Grid = ({
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
-        <CurrentRow guess={currentGuess} className={currentRowClassName} />
+        <CurrentRow
+          letters={currentGuessLetters}
+          className={currentRowClassName}
+          cursorIndex={cursorIndex}
+          onCellClick={onCellClick}
+        />
       )}
       {empties.map((_, i) => (
         <EmptyRow key={i} />
