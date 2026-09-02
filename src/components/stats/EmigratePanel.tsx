@@ -3,7 +3,7 @@ import { loadGameStateFromLocalStorage } from '../../lib/localStorage'
 import { MigrationStats } from '../modals/MigrateStatsModal'
 import { encrypt } from '../../lib/encryption'
 import { copyTextToClipboard } from '../../lib/clipboard'
-import { DuplicateIcon } from '@heroicons/react/outline'
+import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
 export const EmigratePanel = () => {
@@ -48,7 +48,7 @@ export const EmigratePanel = () => {
           disabled:text-gray-900 disabled:focus:outline-none disabled:bg-white disabled:border-gray-200 disabled:dark:bg-gray-800 disabled:dark:text-gray-400 disabled:dark:border-gray-600"
       >
         {isCopyButtonEnabled && (
-          <DuplicateIcon className="h-6 w-6 mr-2 cursor-pointer dark:stroke-white" />
+          <DocumentDuplicateIcon className="h-6 w-6 mr-2 cursor-pointer dark:stroke-white" />
         )}
         {copyButtonText}
       </button>

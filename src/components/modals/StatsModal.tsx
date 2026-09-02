@@ -1,5 +1,5 @@
 import Countdown from 'react-countdown'
-import { ShareIcon } from '@heroicons/react/outline'
+import { ShareIcon } from '@heroicons/react/24/outline'
 import { StatBar } from '../stats/StatBar'
 import { Histogram } from '../stats/Histogram'
 import { GameStats } from '../../lib/localStorage'
