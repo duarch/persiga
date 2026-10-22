@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.duarch.persiga",
+      "sha256_cert_fingerprints": [
+        "C6:7E:70:F7:EF:9A:BF:FE:1D:85:3A:1A:55:88:BC:49:FB:F3:32:5A:82:56:36:3F:D0:0D:79:8E:56:9B:1B:E5"
+      ]
+    }
+  }
+]
